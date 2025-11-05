@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUBS_New | Био</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    
+    <div class="noise-background"></div>
+
+    <div class="cursor-dot"></div>
+    
+    <div class="container">
+        
+        <div class="avatar-container">
+            <img src="placeholder.jpg" alt="Ваш аватар" class="avatar">
+        </div>
+
+        <h1 class="name">RUBS_New</h1>
+        
+        <p class="location-close">
+            <i class="fas fa-globe"></i> <span>From: Russia</span>
+        </p>
+
+        <p class="developer-title-close">
+            <i class="fas fa-cog"></i> <span>Developer: Lua,Python</span>
+        </p>
+
+        <div class="tag-buttons">
+            <a href="#" class="tag-button heroku" target="_blank">Heroku</a>
+        </div>
+        
+        <div class="divider"></div> 
+
+        <div class="links">
+            
+            <a href="https://t.me/RUBS_New" class="link-button telegram" target="_blank">
+                <i class="fab fa-telegram-plane"></i> <span>Telegram</span>
+            </a>
+            
+            <a href="https://github.com/RUBS-new" class="link-button github" target="_blank">
+                <i class="fab fa-github"></i> <span>GitHub / Проекты</span>
+            </a>
+            
+            <a href="https://t.me/RUBS_Modules" class="link-button modules" target="_blank">
+                <i class="fas fa-folder"></i> <span>Модули</span> 
+            </a>
+            
+            <a href="#" class="link-button donate" target="_blank">
+                <i class="fas fa-wallet"></i> <span>Донат</span>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>By RUBS_New💜</p>
+        </div>
+    </div>
+
+<script>
+    const cursorDot = document.querySelector(".cursor-dot");
+    // Выбираем все интерактивные элементы (ссылки, кнопки)
+    const interactiveElements = document.querySelectorAll('a, .tag-button'); 
+    
+    // 💥 НОВОЕ: Создаем объект Audio 💥
+    const clickSound = new Audio('click.mp3');
+    clickSound.volume = 0.5; // Устанавливаем громкость на 50%
+    
+    // 💥 НОВОЕ: Функция воспроизведения звука 💥
+    function playClickSound(e) {
+        // Клонируем объект Audio, чтобы звук мог проигрываться несколько раз одновременно 
+        // (если пользователь быстро кликает)
+        const soundClone = clickSound.cloneNode();
+        soundClone.play().catch(error => {
+            // Игнорируем ошибку, если пользователь еще не взаимодействовал со страницей
+            // (браузеры блокируют автовоспроизведение)
+        });
+    }
+
+    // 1. Логика ДВИЖЕНИЯ КУРСОР
+    window.addEventListener("mousemove", function (e) {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        cursorDot.animate({
+            left: `${posX}px`,
+            top: `${posY}px`
+        }, { duration: 250, fill: "forwards" }); 
+    });
+
+    // 2. Логика РЕАКЦИИ КУРСОР НА НАВЕДЕНИЕ и ЗВУК
+    interactiveElements.forEach(element => {
+        // Реакция на наведение (уже было)
+        element.addEventListener('mouseenter', () => {
+            cursorDot.classList.add('is-hovering');
+        });
+
+        element.addEventListener('mouseleave', () => {
+            cursorDot.classList.remove('is-hovering');
+        });
+        
+        // 💥 НОВОЕ: Добавляем проигрывание звука по клику 💥
+        element.addEventListener('click', playClickSound);
+    });
+
+</script>
+</body>
+</html>
